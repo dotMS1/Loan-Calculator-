@@ -1,0 +1,99 @@
+import math
+import argparse
+#enter_lp = 'Enter the loan principal:'
+#enter_mp = 'Enter the monthly payment:'
+#enter_li = 'Enter the loan interest:'
+#enter_np = 'Enter the number of periods:'
+#enter_a = 'Enter the annuity payment:'
+
+parser = argparse.ArgumentParser(description="This program calculates Differentiate or Annuity payment.")
+
+parser.add_argument("--type", help='indicates types of payments: "diff" (differentiated) or "annuity".', type=str)
+parser.add_argument("--payment", help="monthly payment", type=int)
+parser.add_argument("--principal", help="loan principal is used to both calculations", type=int)
+parser.add_argument("--periods", help="number of periods is used to both calculations", type=int)
+parser.add_argument("--interest", help="loan interest in % is used to both calculations", type=float)
+
+args = parser.parse_args()
+
+lp = args.principal
+mp = args.payment
+li = args.interest
+np = args.periods
+tp = args.type
+
+
+def differentiated_payment():
+  #print(f'{enter_lp}')
+  #lp = int(input())
+  #print(f'{enter_np}')
+  #np = int(input())
+  #print(f'{enter_li}')
+  #li = float(input())
+  m = 0
+  sd = []
+  while m != np:
+    m_ir = li / (12 * 100)
+    m += 1
+    d = math.ceil(lp / np + m_ir * (lp - (lp * (m - 1)) / np))
+    print(f'Month {m}: payment is {round(d)}')
+    sd.append(d)
+    print(f'Overpayment = {round(sum(sd) - lp, 0)}')
+
+def monthly_payment():
+  #print(f'{enter_lp}')
+  #lp = int(input())
+  #print(f'{enter_mp}')
+  #mp = int(input())
+  #print(f'{enter_li}')
+  #li = float(input())
+  
+  m_ir = li / (12 * 100)
+  n = math.log(mp / (mp - m_ir * lp), 1 + m_ir)  
+  n_round = round(n, 0)
+  #print(m_ir) 
+  #print(n_round) 
+  n_years = int(n_round // 12)
+  n_months = int(n_round - n_years * 12)
+  print(f'It will take {n_years} years and {n_months} months to repay this loan!')
+  overpayment = int(round(((mp * n_round) - lp), 0))
+  print(f'Overpayment = {overpayment}')
+
+def loan_principal():
+  #print(f'{enter_a}')
+  # a = float(input())
+  #print(f'{enter_np}')
+  #  np = int(input())
+  #  print(f'{enter_li}')
+  #  li = float(input())
+    
+  m_ir = li / (12 * 100) 
+  lp = int(mp / ((m_ir * pow(1 + m_ir, np)) / (pow(1 + m_ir, np) - 1)))
+  print(f'Your loan principal = {lp}!')
+
+def annuity_payment():
+  #print(f'{enter_lp}')
+  #lp = int(input())
+  #print(f'{enter_np}')
+  #np = int(input())
+  #print(f'{enter_li}')
+  #li = float(input())
+  n_ir = li / (12 * 100)
+  mp = lp * (n_ir * pow(1 + n_ir, np) / (pow(1 + n_ir, np) - 1))
+  print(f'Your monthly payment = {round(mp, 2)}!')
+
+if tp == 'diff':
+  try:
+    differentiated_payment()
+  except TypeError:
+    print('Incorrect parameters')
+elif tp == 'annuity':
+    try:
+        if lp and np:
+            annuity_payment()
+        elif mp and np:
+            loan_principal()
+        elif lp and mp:
+            monthly_payment()
+    except TypeError:
+        print('Incorrect parameters')
