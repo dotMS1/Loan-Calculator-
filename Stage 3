@@ -1,0 +1,70 @@
+loan_principal = 'Loan principal: 1000'
+final_output = 'The loan has been repaid!'
+first_month = 'Month 1: repaid 250'
+second_month = 'Month 2: repaid 250'
+third_month = 'Month 3: repaid 500'
+
+# write your code here
+import math
+print("""What do you want to calculate?
+type "n" - for number of monthly payments,
+type "a" - for annuity monthly payment amount,
+type "p" - for loan principal:""")
+
+n_a_or_p = input()
+enter_lp = 'Enter the loan principal:'
+enter_mp = 'Enter the monthly payment:'
+enter_li = 'Enter the loan interest:'
+enter_np = 'Enter the number of periods:'
+enter_a = 'Enter the annuity payment:'
+#lp = loan_principal
+#mp = monthly_payment
+#li = loan_interest
+#np = nummber_of_periods
+
+ 
+
+if n_a_or_p == 'n':
+    print(f'{enter_lp}')
+    lp = int(input())
+    print(f'{enter_mp}')
+    mp = int(input())
+    print(f'{enter_li}')
+    li = float(input())
+    
+    n_ir = 0.0083333
+    n = math.log(mp / (mp - n_ir * lp), 1 + n_ir)  
+    n_round = round(n, 0)
+    print(n_ir) 
+    print(n_round) 
+    n_years = int(n_round // 12)
+    n_months = int(n_round - n_years * 12)
+    print(f'It will take {n_years} years and {n_months} months to repay this loan!')
+    
+elif n_a_or_p == 'a':
+    print(f'{enter_lp}')
+    lp = int(input())
+    print(f'{enter_np}')
+    np = int(input())
+    print(f'{enter_li}')
+    li = float(input())
+    n_ir = li * 0.01 / 12 
+    
+    a = int(lp * (n_ir * pow(1 + n_ir, np) /  (pow(1 + n_ir, np) - 1))) + 1
+    print(f'Your monthly payment = {a}!')
+
+elif n_a_or_p == 'p':
+    print(f'{enter_a}')
+    a = float(input())
+    print(f'{enter_np}')
+    np = int(input())
+    print(f'{enter_li}')
+    li = float(input())
+    
+    n_ir = li * 0.01 / 12 
+    p = int(a / ((n_ir * pow(1 + n_ir, np)) / (pow(1 + n_ir, np) - 1)))
+    print(f'Your loan principal = {p}!')
+    
+else:
+    def do_nothing():
+        end
