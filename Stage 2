@@ -1,0 +1,41 @@
+loan_principal = 'Loan principal: 1000'
+final_output = 'The loan has been repaid!'
+first_month = 'Month 1: repaid 250'
+second_month = 'Month 2: repaid 250'
+third_month = 'Month 3: repaid 500'
+
+# write your code here
+import math
+print('Enter the loan principal')
+loan_principal= int(input())
+
+print("""What do you want to calculate?
+type "m" - for number of monthly payments,
+type "p" - for the monthly payment:""")
+
+m_or_p = input()
+payment = 0
+no_payments = 0
+payment_1 = 0
+payment_2 = 0
+
+if m_or_p == 'p':
+    print('Enter the monthly payment:')
+    loan_monthly = int(input())
+    payment = loan_principal // loan_monthly 
+    if loan_principal % loan_monthly != 0:
+        payment_1 = loan_principal // loan_monthly + 1
+        payment_2 = loan_principal - (payment_1 * (loan_monthly -1))     
+        print('Your monthly payment =', int(payment_1), 'and the last payment =', int(payment_2))
+    else:
+        print('Your monthly payment =', int(payment))
+elif m_or_p == 'm':  
+    print('Enter the number of months:')
+    months = int(input())
+    no_payments = (round(loan_principal /months, 0))
+    if no_payments > 1:
+        print('It will take', int(no_payments), 'months to repay the loan')
+    else:
+        print('It will take', int(no_payments), 'month to repay the loan')
+else: 
+    print('Pipi') 
